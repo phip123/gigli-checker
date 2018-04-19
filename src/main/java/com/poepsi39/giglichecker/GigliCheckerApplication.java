@@ -17,11 +17,9 @@ public class GigliCheckerApplication {
     @Bean
     public CommandLineRunner runner(UserRepository userRepository) {
         return args -> {
-            userRepository.findUserByNameContainingIgnoreCase("fillipp")
-                    .ifPresentOrElse(
-                            c -> { },
-                            () -> userRepository.save(User.UserBuilder.anUser().name("fillipp").seen(false).build())
-                    );
+            if (!userRepository.findUserByNameContainingIgnoreCase("fillipp").isPresent()) {
+                userRepository.save(User.UserBuilder.anUser().name("fillipp").seen(false).build());
+            }
         };
     }
 
