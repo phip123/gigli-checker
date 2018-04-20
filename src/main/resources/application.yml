@@ -1,27 +1,25 @@
+spring:
+  profiles: prod
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
 management:
   endpoints:
     web:
       exposure:
-        include: "**"
-
-spring:
-  profiles: prod
-  cache:
-      jcache:
-        config: classpath:ehcache.xml
-
+        include: "*"
 bucket4j:
   enabled: true
   filters:
-    - cache-name: buckets
-      url: /**
-      rate-limits:
+  - cache-name: buckets
+    filter-method: servlet
+    url: /*
+    rate-limits:
     - filter-key-type: default
       bandwidths:
-      - capacity: 5
-        time: 10
-        unit: seconds
-
+      - capacity: 10
+        time: 1
+        unit: minutes
 
 ---
 
